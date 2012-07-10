@@ -32,8 +32,6 @@
 					
 						<g:sortableColumn property="place" title="${message(code: 'workShop.place.label', default: 'Place')}" />
 					
-						<g:sortableColumn property="detail" title="${message(code: 'workShop.detail.label', default: 'Detail')}" />
-					
 						<g:sortableColumn property="owner" title="${message(code: 'workShop.owner.label', default: 'Owner')}" />
 					
 					</tr>
@@ -44,13 +42,11 @@
 					
 						<td><g:link action="show" id="${workShopInstance.id}">${fieldValue(bean: workShopInstance, field: "title")}</g:link></td>
 					
-						<td><g:formatDate date="${workShopInstance.start}" /></td>
+						<td><g:formatDate date="${workShopInstance.start}" format="yyyy/MM/dd hh:mm" /></td>
 					
-						<td><g:formatDate date="${workShopInstance.end}" /></td>
+						<td><g:formatDate date="${workShopInstance.end}" format="yyyy/MM/dd hh:mm" /></td>
 					
 						<td>${fieldValue(bean: workShopInstance, field: "place")}</td>
-					
-						<td>${fieldValue(bean: workShopInstance, field: "detail")}</td>
 					
 						<td>${fieldValue(bean: workShopInstance, field: "owner")}</td>
 					
