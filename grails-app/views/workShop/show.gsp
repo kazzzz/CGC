@@ -36,7 +36,7 @@
 				<li class="fieldcontain">
 					<span id="start-label" class="property-label"><g:message code="workShop.start.label" default="Start" /></span>
 					
-						<span class="property-value" aria-labelledby="start-label"><g:formatDate date="${workShopInstance?.start}" /></span>
+						<span class="property-value" aria-labelledby="start-label"><g:formatDate date="${workShopInstance?.start}" format="yyyy/MM/dd hh:mm" /></span>
 					
 				</li>
 				</g:if>
@@ -45,7 +45,7 @@
 				<li class="fieldcontain">
 					<span id="end-label" class="property-label"><g:message code="workShop.end.label" default="End" /></span>
 					
-						<span class="property-value" aria-labelledby="end-label"><g:formatDate date="${workShopInstance?.end}" /></span>
+						<span class="property-value" aria-labelledby="end-label"><g:formatDate date="${workShopInstance?.end}" format="yyyy/MM/dd hh:mm" /></span>
 					
 				</li>
 				</g:if>
@@ -85,16 +85,7 @@
 					
 				</li>
 				</g:if>
-			
-				<g:if test="${workShopInstance?.password}">
-				<li class="fieldcontain">
-					<span id="password-label" class="property-label"><g:message code="workShop.password.label" default="Password" /></span>
-					
-						<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${workShopInstance}" field="password"/></span>
-					
-				</li>
-				</g:if>
-			
+				
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
