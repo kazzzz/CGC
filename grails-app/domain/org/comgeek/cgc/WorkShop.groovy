@@ -21,8 +21,6 @@ class WorkShop {
 	
     static constraints = {
 		title(blank : false, maxSize: 64)
-		start(blank: false)
-		end(blank: false)
 		place(blank:false, maxSize: 64)
 		detail(maxSize: 256)
 		owner(blank:false, maxSize: 32)
