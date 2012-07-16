@@ -63,6 +63,6 @@
 		<g:message code="workShop.password.label" default="Password" />
 		
 	</label>
-	<g:textField name="password" maxlength="32" value="${workShopInstance?.password}"/>
+	<g:passwordField name="password" maxlength="4" value="${workShopInstance?.password}"/>
 </div>
 
