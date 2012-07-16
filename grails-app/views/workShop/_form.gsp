@@ -15,7 +15,7 @@
 		<g:message code="workShop.start.label" default="Start" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="start" precision="day"  value="${workShopInstance?.start}"  />
+	<g:datePicker name="start" precision="minute" value="${workShopInstance?.start}" relativeYears="[-1..3]" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: workShopInstance, field: 'end', 'error')} required">
@@ -23,7 +23,7 @@
 		<g:message code="workShop.end.label" default="End" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="end" precision="day"  value="${workShopInstance?.end}"  />
+	<g:datePicker name="end" precision="minute" value="${workShopInstance?.end}" relativeYears="[-1..3]" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: workShopInstance, field: 'place', 'error')} ">
