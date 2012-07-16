@@ -25,6 +25,6 @@ class WorkShop {
 		detail(maxSize: 256)
 		owner(blank:false, maxSize: 32)
 		mail(blank:false, email: true)
-		password(maxSize: 32)
+		password(matches:'^[0-9]{4}$')
     }
 }
