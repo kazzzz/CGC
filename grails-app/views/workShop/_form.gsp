@@ -60,9 +60,9 @@
 
 <div class="fieldcontain ${hasErrors(bean: workShopInstance, field: 'password', 'error')} ">
 	<label for="password">
-		<g:message code="workShop.password.label" default="Password" />
+		<g:message code="workShop.password.label" default="Password"  />
 		
 	</label>
-	<g:passwordField name="password" maxlength="4" value="${workShopInstance?.password}"/>
+	<g:passwordField name="password" maxlength="4" value="${workShopInstance?.password}" />
 </div>
 

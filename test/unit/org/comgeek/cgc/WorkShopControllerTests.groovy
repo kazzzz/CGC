@@ -9,151 +9,156 @@ import grails.test.mixin.*
 @Mock(WorkShop)
 class WorkShopControllerTests {
 
+	def populateValidParams(params) {
+		params['title'] = 'タイトル'
+		params['start'] = new Date()
+		params['end'] = new Date()
+		params['place'] = '幕張ビル'
+		params['detail'] = 'セキュリティはなぜ破られたのか'
+		params['owner'] = '陣内'
+		params['mail'] = 'jin@example.com'
+		params['password'] = '0000'
+		
+	}
 
-    def populateValidParams(params) {
-      assert params != null
-      // TODO: Populate valid properties like...
-      //params["name"] = 'someValidName'
-    }
+	void testIndex() {
+		controller.index()
+		assert "/workShop/list" == response.redirectedUrl
+	}
 
-    void testIndex() {
-        controller.index()
-        assert "/workShop/list" == response.redirectedUrl
-    }
+	void testList() {
 
-    void testList() {
+		def model = controller.list()
 
-        def model = controller.list()
+		assert model.workShopInstanceList.size() == 0
+		assert model.workShopInstanceTotal == 0
+	}
 
-        assert model.workShopInstanceList.size() == 0
-        assert model.workShopInstanceTotal == 0
-    }
+	void testCreate() {
+		populateValidParams(params)
+		def model = controller.create()
+		assert model.workShopInstance != null
+	}
 
-    void testCreate() {
-       def model = controller.create()
+	void testSave() {
+		controller.save()
 
-       assert model.workShopInstance != null
-    }
+		assert model.workShopInstance != null
+		assert view == '/workShop/create'
 
-    void testSave() {
-        controller.save()
+		response.reset()
 
-        assert model.workShopInstance != null
-        assert view == '/workShop/create'
+		populateValidParams(params)
+		controller.save()
 
-        response.reset()
+		assert response.redirectedUrl == '/workShop/show/1'
+		assert controller.flash.message != null
+		assert WorkShop.count() == 1
+	}
 
-        populateValidParams(params)
-        controller.save()
+	void testShow() {
+		controller.show()
 
-        assert response.redirectedUrl == '/workShop/show/1'
-        assert controller.flash.message != null
-        assert WorkShop.count() == 1
-    }
-
-    void testShow() {
-        controller.show()
-
-        assert flash.message != null
-        assert response.redirectedUrl == '/workShop/list'
-
-
-        populateValidParams(params)
-        def workShop = new WorkShop(params)
-
-        assert workShop.save() != null
-
-        params.id = workShop.id
-
-        def model = controller.show()
-
-        assert model.workShopInstance == workShop
-    }
-
-    void testEdit() {
-        controller.edit()
-
-        assert flash.message != null
-        assert response.redirectedUrl == '/workShop/list'
+		assert flash.message != null
+		assert response.redirectedUrl == '/workShop/list'
 
 
-        populateValidParams(params)
-        def workShop = new WorkShop(params)
+		populateValidParams(params)
+		def workShop = new WorkShop(params)
 
-        assert workShop.save() != null
+		assert workShop.save() != null
 
-        params.id = workShop.id
+		params.id = workShop.id
 
-        def model = controller.edit()
+		def model = controller.show()
 
-        assert model.workShopInstance == workShop
-    }
+		assert model.workShopInstance == workShop
+	}
 
-    void testUpdate() {
-        controller.update()
+	void testEdit() {
+		controller.edit()
 
-        assert flash.message != null
-        assert response.redirectedUrl == '/workShop/list'
-
-        response.reset()
+		assert flash.message != null
+		assert response.redirectedUrl == '/workShop/list'
 
 
-        populateValidParams(params)
-        def workShop = new WorkShop(params)
+		populateValidParams(params)
+		def workShop = new WorkShop(params)
 
-        assert workShop.save() != null
+		assert workShop.save() != null
 
-        // test invalid parameters in update
-        params.id = workShop.id
-        //TODO: add invalid values to params object
+		params.id = workShop.id
 
-        controller.update()
+		def model = controller.edit()
 
-        assert view == "/workShop/edit"
-        assert model.workShopInstance != null
+		assert model.workShopInstance == workShop
+	}
 
-        workShop.clearErrors()
+	void testUpdate() {
+		controller.update()
 
-        populateValidParams(params)
-        controller.update()
+		assert flash.message != null
+		assert response.redirectedUrl == '/workShop/list'
 
-        assert response.redirectedUrl == "/workShop/show/$workShop.id"
-        assert flash.message != null
+		response.reset()
 
-        //test outdated version number
-        response.reset()
-        workShop.clearErrors()
 
-        populateValidParams(params)
-        params.id = workShop.id
-        params.version = -1
-        controller.update()
+		populateValidParams(params)
+		def workShop = new WorkShop(params)
 
-        assert view == "/workShop/edit"
-        assert model.workShopInstance != null
-        assert model.workShopInstance.errors.getFieldError('version')
-        assert flash.message != null
-    }
+		assert workShop.save() != null
 
-    void testDelete() {
-        controller.delete()
-        assert flash.message != null
-        assert response.redirectedUrl == '/workShop/list'
+		// test invalid parameters in update
+		params.id = workShop.id
+		params.password = 'aaa'
 
-        response.reset()
+		controller.update()
 
-        populateValidParams(params)
-        def workShop = new WorkShop(params)
+		assert view == "/workShop/edit"
+		assert model.workShopInstance != null
 
-        assert workShop.save() != null
-        assert WorkShop.count() == 1
+		workShop.clearErrors()
 
-        params.id = workShop.id
+		populateValidParams(params)
+		controller.update()
 
-        controller.delete()
+		assert response.redirectedUrl == "/workShop/show/$workShop.id"
+		assert flash.message != null
 
-        assert WorkShop.count() == 0
-        assert WorkShop.get(workShop.id) == null
-        assert response.redirectedUrl == '/workShop/list'
-    }
+		//test outdated version number
+		response.reset()
+		workShop.clearErrors()
+
+		populateValidParams(params)
+		params.id = workShop.id
+		params.version = -1
+		controller.update()
+
+		assert view == "/workShop/edit"
+		assert model.workShopInstance != null
+		assert model.workShopInstance.errors.getFieldError('version')
+		assert flash.message != null
+	}
+
+	void testDelete() {
+		controller.delete()
+		assert flash.message != null
+		assert response.redirectedUrl == '/workShop/list'
+
+		response.reset()
+
+		populateValidParams(params)
+		def workShop = new WorkShop(params)
+
+		assert workShop.save() != null
+		assert WorkShop.count() == 1
+
+		params.id = workShop.id
+
+		controller.delete()
+
+		assert WorkShop.count() == 0
+		assert WorkShop.get(workShop.id) == null
+		assert response.redirectedUrl == '/workShop/list'
+	}
 }
